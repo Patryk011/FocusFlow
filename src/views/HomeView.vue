@@ -1,9 +1,13 @@
+<template>
+  <div class="home-view">
+    <Button label="START" @click="onClick" />
+  </div>
+</template>
+
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import Button from '@/components/atoms/Button/Button.vue'
+
+const onClick = () => console.log('xxx')
 </script>
 
-<template>
-  <main>
-    <TheWelcome />
-  </main>
-</template>
+<style lang="scss" scoped></style>
