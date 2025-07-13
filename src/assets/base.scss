@@ -1,0 +1,23 @@
+@use './variables/colors';
+@use './variables/typography';
+@use './reset';
+
+body {
+  min-height: 100vh;
+  color: var(--color-text-primary);
+  background: var(--color-bg-primary);
+
+  font-family: var(--ff-primary);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-400);
+
+  transition:
+    color 0.5s,
+    background-color 0.5s;
+  line-height: 1.6;
+  overflow: hidden;
+
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
