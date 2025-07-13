@@ -1,7 +1,11 @@
-import type { ISize } from '@/globalTypes/global.types'
+export enum EButtonSizes {
+  SMALL = 'small',
+  MEDIUM = 'medium',
+  BIG = 'big',
+}
 
 export interface IButtonProps {
   label: string
   onClick: () => void
-  size?: ISize
+  size?: EButtonSizes
 }
