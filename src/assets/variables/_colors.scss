@@ -7,6 +7,9 @@
   --color-gray-medium: #424d4d;
   --color-gray-lightest: #f2f7f7;
 
+  --color-primary: var(--color-white);
+  --color-inverse: var(--color-dark-primary);
+
   --color-bg-secondary: var(--color-gray-lightest);
   --color-bg-tertiary: var(--color-gray-lighter);
   --color-bg-surface: var(--color-white);
@@ -33,6 +36,9 @@
   --color-focus-ring: rgba(59, 130, 246, 0.1);
 
   @media (prefers-color-scheme: dark) {
+    --color-primary: var(--color-dark-primary);
+    --color-inverse: var(--color-white);
+
     --color-bg-primary: var(--color-dark-secondary);
     --color-bg-secondary: var(--color-dark-primary);
     --color-bg-tertiary: var(--color-gray-medium);

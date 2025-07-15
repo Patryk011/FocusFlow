@@ -7,6 +7,6 @@ export enum EIconTypes {
 export interface IIconProps {
   icon: EIconTypes
   color?: string
-  size?: ISize
+  size?: number
   hoverColor?: string
 }
