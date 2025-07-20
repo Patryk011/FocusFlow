@@ -17,6 +17,7 @@ withDefaults(defineProps<IButtonProps>(), {
 @import '@assets/buttons.scss';
 
 .btn {
+  margin-top: 10%;
   &--primary {
     @include primary-button;
   }
@@ -29,8 +30,8 @@ withDefaults(defineProps<IButtonProps>(), {
     @include btn-medium;
   }
 
-  &--big {
-    @include btn-big;
+  &--small {
+    @include btn-small;
   }
 }
 </style>
