@@ -17,7 +17,7 @@ const route = useRoute()
 
 const isActive = computed(() => route.path === to)
 
-console.log(isActive.value)
+// Line removed
 </script>
 
 <style lang="scss" scoped>
