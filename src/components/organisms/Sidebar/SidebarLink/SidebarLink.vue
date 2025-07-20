@@ -16,8 +16,6 @@ const { to } = defineProps<ISidebarLinkProps>()
 const route = useRoute()
 
 const isActive = computed(() => route.path === to)
-
-// Line removed
 </script>
 
 <style lang="scss" scoped>
