@@ -12,9 +12,9 @@ const iconSvgContent = ref<string>('')
 
 onMounted(async () => {
   try {
-    const svgContent = await import(`/src/assets/icons/${icon}.svg?raw`)
+    const svgContent = await fetch(`/src/assets/icons/${icon}.svg`)
 
-    iconSvgContent.value = svgContent.default
+    iconSvgContent.value = await svgContent.text()
   } catch (error) {
     console.error(`Problem with loading icon ${error}`)
     iconSvgContent.value = ''
