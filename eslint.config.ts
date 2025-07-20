@@ -24,14 +24,12 @@ const baseConfig = defineConfigWithVueTs(
   skipFormatting,
 )
 
-export default {
-  ...baseConfig,
-  overrides: [
-    {
-      files: ['*.vue'],
-      rules: {
-        'vue/multi-word-component-names': 'off',
-      },
+export default [
+  baseConfig,
+  {
+    files: ['*.vue'],
+    rules: {
+      'vue/multi-word-component-names': 'off',
     },
-  ],
-}
+  },
+]
