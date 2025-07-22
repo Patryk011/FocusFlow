@@ -1,4 +1,4 @@
-export type TTimeUnits = 'seconds' | 'hours' | 'minutes'
+export type TTimeUnits = 'Seconds' | 'Hours' | 'Minutes'
 
 export interface ITimerBlockProps {
   time: string
