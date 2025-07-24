@@ -1,0 +1,67 @@
+:root {
+  --color-white: #ffffff;
+  --color-dark-primary: #2e3333;
+  --color-dark-secondary: #121717;
+  --color-gray-light: #a6b0b0;
+  --color-gray-lighter: #e5e8e8;
+  --color-gray-medium: #424d4d;
+  --color-gray-lightest: #f2f7f7;
+
+  --color-primary: var(--color-white);
+  --color-inverse: var(--color-dark-primary);
+
+  --color-bg-secondary: var(--color-gray-lightest);
+  --color-bg-tertiary: var(--color-gray-lighter);
+  --color-bg-surface: var(--color-white);
+  --color-bg-overlay: rgba(18, 23, 23, 0.5);
+
+  --color-text-primary: var(--color-dark-secondary);
+  --color-text-secondary: var(--color-dark-primary);
+  --color-text-tertiary: var(--color-gray-medium);
+  --color-text-muted: var(--color-gray-light);
+  --color-text-inverse: var(--color-white);
+
+  --color-border-primary: var(--color-gray-lighter);
+  --color-border-secondary: var(--color-gray-light);
+  --color-border-tertiary: var(--color-gray-medium);
+
+  --shadow-color: rgba(46, 51, 51, 0.1);
+  --shadow-color-light: rgba(46, 51, 51, 0.05);
+  --shadow-color-medium: rgba(46, 51, 51, 0.15);
+  --shadow-color-strong: rgba(46, 51, 51, 0.25);
+
+  --color-hover-overlay: var(--color-bg-tertiary);
+  --color-active-overlay: var(--color-border-secondary);
+  --color-focus: var(--color-accent-primary);
+  --color-focus-ring: rgba(59, 130, 246, 0.1);
+
+  @media (prefers-color-scheme: dark) {
+    --color-primary: var(--color-dark-primary);
+    --color-inverse: var(--color-white);
+
+    --color-bg-primary: var(--color-dark-secondary);
+    --color-bg-secondary: var(--color-dark-primary);
+    --color-bg-tertiary: var(--color-gray-medium);
+    --color-bg-surface: var(--color-dark-primary);
+    --color-bg-overlay: rgba(255, 255, 255, 0.1);
+
+    --color-text-primary: var(--color-white);
+    --color-text-secondary: var(--color-gray-lightest);
+    --color-text-tertiary: var(--color-gray-lighter);
+    --color-text-muted: var(--color-gray-light);
+    --color-text-inverse: var(--color-dark-secondary);
+
+    --color-border-primary: var(--color-gray-medium);
+    --color-border-secondary: var(--color-gray-light);
+    --color-border-tertiary: var(--color-gray-lighter);
+
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --shadow-color-light: rgba(0, 0, 0, 0.15);
+    --shadow-color-medium: rgba(0, 0, 0, 0.4);
+    --shadow-color-strong: rgba(0, 0, 0, 0.6);
+
+    --color-hover-overlay: var(--color-gray-medium);
+    --color-active-overlay: var(--color-gray-light);
+    --color-focus-ring: rgba(59, 130, 246, 0.2);
+  }
+}
