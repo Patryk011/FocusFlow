@@ -1,32 +1,41 @@
 <template>
-  <div class="timer">
-    <TimerBlock v-for="{ time, timeUnits } in timeBlocks" :time :time-units />
+  <div class="timer-wrapper">
+    <div class="time-block">
+      <span class="time-block__text">{{ time }}</span>
+    </div>
+    <span class="time-text">Time</span>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import TimerBlock from './TimerBlock/TimerBlock.vue'
-import type { ITimeBlocks } from './Timer.types'
+import type { ITimerProps } from './Timer.types'
 
-const currentSeconds = ref(0)
-
-const timeBlocks = computed((): Array<ITimeBlocks> => {
-  const hours = currentSeconds.value / 3600
-  const minutes = (currentSeconds.value % 3600) / 60
-  const seconds = currentSeconds.value % 60
-
-  return [
-    { time: hours.toString().padStart(2, '0'), timeUnits: 'Hours' },
-    { time: minutes.toString().padStart(2, '0'), timeUnits: 'Minutes' },
-    { time: seconds.toString().padStart(2, '0'), timeUnits: 'Seconds' },
-  ]
-})
+defineProps<ITimerProps>()
 </script>
 
 <style lang="scss" scoped>
-.timer {
+.timer-wrapper {
   display: flex;
-  gap: 2rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  & .time-block {
+    padding-inline: 10rem;
+    padding-block: 2rem;
+    border-radius: 0.4rem;
+    background-color: var(--color-bg-secondary);
+
+    &__text {
+      font-weight: var(--fw-medium);
+      font-size: var(--fs-700);
+      letter-spacing: 1px;
+    }
+  }
+
+  & > .time-text {
+    font-size: var(--fs-600);
+  }
 }
 </style>
