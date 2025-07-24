@@ -1,6 +1,8 @@
-import type { TTimeUnits } from './TimerBlock/TimerBlock.types'
+import type { TIMER_MODES } from './Timer.consts'
 
-export interface ITimeBlocks {
+export type TimerMode = keyof typeof TIMER_MODES
+
+export interface ITimerProps {
   time: string
-  timeUnits: TTimeUnits
+  isRunning: boolean
 }

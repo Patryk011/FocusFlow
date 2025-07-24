@@ -5,7 +5,7 @@ export interface ITabItem {
 
 export interface ITabNavigationProps {
   tabs: Array<ITabItem>
-  activeTab: string
+  activeTab: string | null
 }
 
 export interface ITabNavigationEmits {
