@@ -1,5 +1,5 @@
 <template>
-  <div class="tab-item" :class="{ active: isActive }">
+  <div :class="['tab-item', { active: isActive }]">
     <button @click="handleClick" class="tab-item__button">{{ label }}</button>
   </div>
 </template>
@@ -38,7 +38,7 @@ const handleClick = (event: MouseEvent) => {
     }
   }
 
-  &.active {
+  &.active > &__button {
     color: var(--color-white);
   }
 }
