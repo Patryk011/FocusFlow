@@ -7,6 +7,20 @@
 @mixin primary-button {
   background-color: var(--color-white);
   color: var(--color-text-inverse);
+
+  &:hover {
+    background-color: var(--color-gray-lightest);
+    border-color: var(--color-hover-overlay);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px var(--shadow-color-light);
+  }
+
+  &:active {
+    background-color: var(--color-active-overlay);
+    border-color: var(--color-active-overlay);
+    transform: translateY(0);
+    box-shadow: 0 2px 4px var(--shadow-color-medium);
+  }
 }
 
 @mixin btn-small {

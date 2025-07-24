@@ -21,8 +21,11 @@ import { TIMER_MODES } from '@/components/molecules/Timer/Timer.consts'
 import type { TimerMode } from '@/components/molecules/Timer/Timer.types'
 import Timer from '@/components/molecules/Timer/Timer.vue'
 
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import bellSrc from '@assets/audio/bell.wav'
+import { useDocumentVisibility } from '@vueuse/core'
+
+const documentVisibility = useDocumentVisibility()
 
 const audioSound = new Audio(bellSrc)
 
@@ -31,7 +34,9 @@ const isRunning = ref<boolean>(false)
 const timeLeft = ref<number>(TIMER_MODES['Focus'] * 60)
 const timerIntervalId = ref<ReturnType<typeof setInterval> | null>(null)
 
-const label = computed(() => (isRunning.value ? 'STOP' : 'START'))
+const sessionStartTime = ref<number | null>(null)
+const sessionDuration = ref<number>(0)
+const isPageVisible = ref<boolean>(true)
 
 const tabs: ITabItem[] = [
   { key: 'Focus', label: 'Focus' },
@@ -39,12 +44,29 @@ const tabs: ITabItem[] = [
   { key: 'Long Break', label: 'Long Break' },
 ]
 
+const label = computed(() => (isRunning.value ? 'STOP' : 'START'))
+
 const formattedTime = computed(() => {
   const minutes = Math.floor(timeLeft.value / 60)
   const seconds = timeLeft.value % 60
 
   return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
 })
+
+const updateTimeFromTimestamp = () => {
+  if (!sessionStartTime.value || !isRunning.value) return
+
+  const now = Date.now()
+  const elapsedSeconds = Math.floor((now - sessionStartTime.value) / 1000)
+  const newTimeLeft = Math.max(0, sessionDuration.value - elapsedSeconds)
+
+  timeLeft.value = newTimeLeft
+
+  if (newTimeLeft === 0) {
+    stopTimerInterval()
+    completeSession()
+  }
+}
 
 const stopTimerInterval = () => {
   if (timerIntervalId.value) {
@@ -97,16 +119,27 @@ const completeSession = () => {
 const startTimerInterval = () => {
   if (timerIntervalId.value) return
 
+  sessionStartTime.value = Date.now()
+
+  sessionDuration.value = timeLeft.value
+
   timerIntervalId.value = setInterval(() => {
     isRunning.value = true
+
+    if (documentVisibility.value !== 'visible') {
+      updateTimeFromTimestamp()
+      return
+    }
 
     if (timeLeft.value > 0) {
       timeLeft.value--
       return
     }
 
-    stopTimerInterval()
-    completeSession()
+    if (timeLeft.value === 0) {
+      stopTimerInterval()
+      completeSession()
+    }
   }, 1000)
 }
 
@@ -132,6 +165,12 @@ onMounted(() => {
 onUnmounted(() => {
   if (timerIntervalId.value) {
     clearInterval(timerIntervalId.value)
+  }
+})
+
+watch(documentVisibility, (isVisible) => {
+  if (isVisible && isRunning.value) {
+    updateTimeFromTimestamp()
   }
 })
 </script>
