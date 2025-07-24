@@ -12,7 +12,7 @@ const iconSvgContent = ref<string>('')
 
 onMounted(async () => {
   try {
-    const svgContent = await fetch(`/src/assets/icons/${icon}.svg`)
+    const svgContent = await fetch(`/icons/${icon}.svg`)
 
     iconSvgContent.value = await svgContent.text()
   } catch (error) {
