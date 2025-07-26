@@ -3,14 +3,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, type CSSProperties, onMounted, ref } from 'vue'
+import { computed, type CSSProperties, onMounted, ref, watch } from 'vue'
 import { type IIconProps } from './Icon.types'
 
 const { icon, color, hoverColor, size } = defineProps<IIconProps>()
 
 const iconSvgContent = ref<string>('')
 
-onMounted(async () => {
+const loadIcon = async () => {
   try {
     const svgContent = await fetch(`/icons/${icon}.svg`)
 
@@ -19,6 +19,10 @@ onMounted(async () => {
     console.error(`Problem with loading icon ${error}`)
     iconSvgContent.value = ''
   }
+}
+
+onMounted(async () => {
+  await loadIcon()
 })
 
 const style = computed<CSSProperties>(() => ({
@@ -26,6 +30,13 @@ const style = computed<CSSProperties>(() => ({
   ...(hoverColor && { '--hover-color': hoverColor }),
   ...(size && { width: `${size}px`, height: `${size}px` }),
 }))
+
+watch(
+  () => icon,
+  async (newIcon, oldIcon) => {
+    if (newIcon !== oldIcon && newIcon) loadIcon()
+  },
+)
 </script>
 
 <style lang="scss" scoped>
