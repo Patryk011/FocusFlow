@@ -7,8 +7,19 @@
       @update:active-tab="handleActivateTab"
       class="home-view__tab-nav"
     />
-    <Timer class="home-view__timer" :time="formattedTime" :is-running />
-    <Button :label :size="EButtonSizes.BIG" @click="toggleTimer" class="home-view__btn" />
+
+    <div class="home-view__content">
+      <Timer class="home-view__timer" :time="formattedTime" :is-running />
+      <Button :label :size="EButtonSizes.BIG" @click="toggleTimer" class="home-view__btn" />
+
+      <MusicPlayer
+        :src="studySrc"
+        :loop="true"
+        @play="onMusicPlay"
+        @pause="onMusicPause"
+        class="home-view__music-player"
+      />
+    </div>
   </div>
 </template>
 
@@ -23,11 +34,15 @@ import Timer from '@/components/molecules/Timer/Timer.vue'
 
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import bellSrc from '@assets/audio/bell.wav'
+import studySrc from '@assets/audio/study.mp3'
 import { useDocumentVisibility } from '@vueuse/core'
+import MusicPlayer from '@/components/organisms/MusicPlayer/MusicPlayer.vue'
 
 const documentVisibility = useDocumentVisibility()
 
 const audioSound = new Audio(bellSrc)
+
+const isMusicPlaying = ref<boolean>(false)
 
 const currentTimeMode = ref<TimerMode | null>('Focus')
 const isRunning = ref<boolean>(false)
@@ -36,7 +51,6 @@ const timerIntervalId = ref<ReturnType<typeof setInterval> | null>(null)
 
 const sessionStartTime = ref<number | null>(null)
 const sessionDuration = ref<number>(0)
-const isPageVisible = ref<boolean>(true)
 
 const tabs: ITabItem[] = [
   { key: 'Focus', label: 'Focus' },
@@ -45,6 +59,10 @@ const tabs: ITabItem[] = [
 ]
 
 const label = computed(() => (isRunning.value ? 'STOP' : 'START'))
+
+const onMusicPlay = () => (isMusicPlaying.value = true)
+
+const onMusicPause = () => (isMusicPlaying.value = false)
 
 const formattedTime = computed(() => {
   const minutes = Math.floor(timeLeft.value / 60)
@@ -177,18 +195,31 @@ watch(documentVisibility, (isVisible) => {
 
 <style lang="scss" scoped>
 .home-view {
-  position: relative;
-  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6rem;
+    padding-right: 15%;
+    padding-bottom: 2%;
+  }
 
   &__timer {
-    padding-top: 3%;
-    padding-right: 15%;
+    width: 100%;
+    max-width: 500px;
   }
 
   &__btn {
-    position: absolute;
-    top: 32%;
-    left: 30%;
+    margin-bottom: 5rem;
+  }
+
+  &__music-player {
   }
 }
 </style>
