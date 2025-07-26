@@ -9,6 +9,8 @@
     />
     <Timer class="home-view__timer" :time="formattedTime" :is-running />
     <Button :label :size="EButtonSizes.BIG" @click="toggleTimer" class="home-view__btn" />
+
+    <MusicPlayer />
   </div>
 </template>
 
@@ -24,6 +26,7 @@ import Timer from '@/components/molecules/Timer/Timer.vue'
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import bellSrc from '@assets/audio/bell.wav'
 import { useDocumentVisibility } from '@vueuse/core'
+import MusicPlayer from '@/components/organisms/MusicPlayer/MusicPlayer.vue'
 
 const documentVisibility = useDocumentVisibility()
 
@@ -36,7 +39,6 @@ const timerIntervalId = ref<ReturnType<typeof setInterval> | null>(null)
 
 const sessionStartTime = ref<number | null>(null)
 const sessionDuration = ref<number>(0)
-const isPageVisible = ref<boolean>(true)
 
 const tabs: ITabItem[] = [
   { key: 'Focus', label: 'Focus' },
@@ -177,9 +179,6 @@ watch(documentVisibility, (isVisible) => {
 
 <style lang="scss" scoped>
 .home-view {
-  position: relative;
-  min-height: 100vh;
-
   &__timer {
     padding-top: 3%;
     padding-right: 15%;
@@ -187,8 +186,8 @@ watch(documentVisibility, (isVisible) => {
 
   &__btn {
     position: absolute;
-    top: 32%;
-    left: 30%;
+    top: 42%;
+    left: 43%;
   }
 }
 </style>
