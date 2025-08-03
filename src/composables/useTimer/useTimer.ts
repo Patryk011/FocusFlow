@@ -60,7 +60,7 @@ export function useTimer() {
         }
       }
     } catch (err) {
-      console.error(err)
+      console.error('Failed to load timer state from localStorage:', err)
       return false
     }
   }
