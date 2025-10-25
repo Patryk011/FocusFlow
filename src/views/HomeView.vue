@@ -13,6 +13,7 @@
       <Button :label :size="EButtonSizes.BIG" @click="toggleTimer" class="home-view__btn" />
 
       <MusicPlayer
+        ref="musicPlayer"
         :src="studySrc"
         :loop="true"
         @play="onMusicPlay"
@@ -32,25 +33,29 @@ import { TIMER_MODES } from '@/components/molecules/Timer/Timer.consts'
 import type { TimerMode } from '@/components/molecules/Timer/Timer.types'
 import Timer from '@/components/molecules/Timer/Timer.vue'
 
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, useTemplateRef, watch } from 'vue'
 import bellSrc from '@assets/audio/bell.wav'
 import studySrc from '@assets/audio/study.mp3'
 import { useDocumentVisibility } from '@vueuse/core'
 import MusicPlayer from '@/components/organisms/MusicPlayer/MusicPlayer.vue'
+import { useTimer } from '@/composables/useTimer/useTimer'
 
 const documentVisibility = useDocumentVisibility()
 
+const {
+  currentTimeMode,
+  isRunning,
+  timeLeft,
+  sessionStartTime,
+  sessionDuration,
+  saveTimerState,
+  resetTimer,
+} = useTimer()
+
+const musicPlayerRef = useTemplateRef('musicPlayer')
 const audioSound = new Audio(bellSrc)
-
 const isMusicPlaying = ref<boolean>(false)
-
-const currentTimeMode = ref<TimerMode | null>('Focus')
-const isRunning = ref<boolean>(false)
-const timeLeft = ref<number>(TIMER_MODES['Focus'] * 60)
 const timerIntervalId = ref<ReturnType<typeof setInterval> | null>(null)
-
-const sessionStartTime = ref<number | null>(null)
-const sessionDuration = ref<number>(0)
 
 const tabs: ITabItem[] = [
   { key: 'Focus', label: 'Focus' },
@@ -92,12 +97,6 @@ const stopTimerInterval = () => {
     timerIntervalId.value = null
   }
   isRunning.value = false
-}
-
-const resetTimer = () => {
-  if (!currentTimeMode.value) return
-
-  timeLeft.value = TIMER_MODES[currentTimeMode.value] * 60
 }
 
 const toggleTimer = () => {
@@ -178,6 +177,8 @@ onMounted(() => {
   if ('Notification' in window && Notification.permission === 'default') {
     Notification.requestPermission()
   }
+
+  if (isRunning.value) startTimerInterval()
 })
 
 onUnmounted(() => {
