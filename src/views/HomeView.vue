@@ -219,8 +219,5 @@ watch(documentVisibility, (isVisible) => {
   &__btn {
     margin-bottom: 5rem;
   }
-
-  &__music-player {
-  }
 }
 </style>
