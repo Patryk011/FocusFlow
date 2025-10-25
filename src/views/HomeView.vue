@@ -35,7 +35,7 @@ import Timer from '@/components/molecules/Timer/Timer.vue'
 
 import { computed, onMounted, onUnmounted, ref, useTemplateRef, watch } from 'vue'
 import bellSrc from '@assets/audio/bell.wav'
-import studySrc from '@assets/audio/study.mp3'
+import studySrc from '@assets/audio/study1.mp3'
 import { useDocumentVisibility } from '@vueuse/core'
 import MusicPlayer from '@/components/organisms/MusicPlayer/MusicPlayer.vue'
 import { useTimer } from '@/composables/useTimer/useTimer'
